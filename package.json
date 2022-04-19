@@ -1,0 +1,17 @@
+{
+  "name": "FINAPI",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/wawa67/FINAPI.git",
+  "author": "Wallace de Souza <wallace.silvadesouza67@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev":"nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
