@@ -1,4 +1,5 @@
 const express = require('express');
+const { type } = require('express/lib/response');
 const { v4: uuidv4 } = require('uuid');
 const app = express()
 
@@ -18,7 +19,17 @@ function verifyIfCustomerExistCPF(request, response, next){
     return next();
 }
 const customers = []
+function getBalance(statement){
+    const balance = statement.reduce((acc,operation)=>{
+        if(operation.type === "credit"){
+            return acc + operation.amount;
+        }else{
+            return acc - operation.amount;
+        }
+    }, 0);
 
+    return balance;
+}
 app.post("/account", (request, response)=>{
     const {cpf, name} = request.body;
     const id = uuidv4();
@@ -58,6 +69,27 @@ app.post("/deposit", verifyIfCustomerExistCPF, (request,response)=>{
 
     customer.statement.push(statementOperation)
 
-    return response.json({message:"deposit sucessfull"})
+    return response.status(201).send()
+})
+
+app.post("/withdraw", verifyIfCustomerExistCPF, (request,response)=>{
+    const {amount} = request.body;
+    const {customer} = request
+
+    const balance = getBalance(customer.statement);
+
+    if(balance < amount){
+        return response.status(400).json({error:"Insufficient fouds!"});
+    }
+
+    const statementOperation = {
+        amount,
+        create_at: new Date(),
+        type: "debit"
+    }
+
+    customer.statement.push(statementOperation);
+
+    return response.status(201).send();
 })
 app.listen(3333);
