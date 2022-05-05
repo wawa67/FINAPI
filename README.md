@@ -20,4 +20,4 @@ Projeto do treinamento ignite da rocketseat, nesse projeto foi criada uma API fi
 - [X]  Não deve ser possível fazer depósito em uma conta não existente
 - [X]  Não deve ser possível fazer saque em uma conta não existente
 - [X]  Não deve ser possível saque quando o saldo for insuficiente
-- []  Não deve ser possível excluir uma conta não existente
+- [X]  Não deve ser possível excluir uma conta não existente
