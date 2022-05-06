@@ -103,4 +103,20 @@ app.get("/statement/date", verifyIfCustomerExistCPF, (request,response)=>{
 
     return response.json(statement);
 })
+
+app.put("/account", verifyIfCustomerExistCPF, (request,response)=>{
+    const { name } = request.body
+    const { customer } = request
+
+    customer.name = name
+
+    response.status(201).send()
+})
+
+app.get("/account",verifyIfCustomerExistCPF, (request, response)=>{
+    const { customer } = request
+
+    return response.json(customer);
+})
+
 app.listen(3333);
